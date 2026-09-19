@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vu Thuy Duong — UI/UX Portfolio Landing Page
 
-## Getting Started
+Single-page portfolio positioning Vu Thuy Duong for **Middle UI/UX Designer** roles, with an
+emphasis on UX depth: research methods, information architecture, process, and measurable outcomes
+rather than screenshots alone.
 
-First, run the development server:
+**Live:** https://duongvu-portfolio.vercel.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Stack
+
+- [Next.js 16](https://nextjs.org) (App Router, Turbopack) + React 19 + TypeScript
+- [Tailwind CSS v4](https://tailwindcss.com) with a custom theme defined in `app/globals.css`
+- `next/font` (Inter, Instrument Serif, JetBrains Mono)
+- Zero runtime animation dependencies — scroll reveals use `IntersectionObserver`
+- Fully static output, deployed on [Vercel](https://vercel.com)
+
+## Structure
+
+```
+app/
+  layout.tsx      fonts, SEO metadata, Person JSON-LD
+  page.tsx        section composition
+  globals.css     design tokens + base/component layers
+  sitemap.ts      /sitemap.xml
+  robots.ts       /robots.txt
+components/
+  Nav  Hero  Work  Process  Skills  Growth  About  Contact  Footer
+  Reveal.tsx      IntersectionObserver scroll-reveal primitive
+  Section.tsx     shared section shell + heading
+content/
+  profile.ts      ALL copy and data lives here
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editing content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Everything on the page is driven by `content/profile.ts` — no copy is hardcoded in components.
+Update the relevant export and the page follows:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Export | Controls |
+| --- | --- |
+| `site` | canonical URL, `<title>`, meta description |
+| `profile` | name, headline, bio, contact details, external links |
+| `stats`, `credibility` | hero metrics and the logo marquee |
+| `projects`, `visualWork` | case studies (`featured: true` renders the long-form card) |
+| `process`, `principles` | the "How I work" section |
+| `skillGroups`, `softSkills`, `tools` | capabilities grid |
+| `growth` | "Levelling up" — UX areas being deepened |
+| `experience`, `education`, `languages` | About sidebar and timeline |
+| `nav` | header navigation |
 
-## Learn More
+After changing the deployed domain, update `site.url` so canonical URLs, Open Graph tags, and
+`sitemap.xml` stay correct.
 
-To learn more about Next.js, take a look at the following resources:
+## Local development
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # production build
+npm run lint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+Connected to Vercel with CI/CD on the `main` branch:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- push to `main` → production deploy
+- any other branch or pull request → preview deploy with its own URL
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Accessibility notes
+
+- Semantic landmarks, a skip link, and visible `:focus-visible` outlines
+- Colour pairings target WCAG 2.1 AA contrast
+- All motion is disabled under `prefers-reduced-motion: reduce`
