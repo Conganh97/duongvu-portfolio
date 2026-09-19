@@ -84,6 +84,15 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${instrument.variable} ${mono.variable}`}
     >
+      <head>
+        <script
+          // Runs before first paint, so reveal animations never cause a flash
+          // and the page stays readable when scripts don't run at all.
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js')`,
+          }}
+        />
+      </head>
       <body className="antialiased">
         <a
           href="#work"

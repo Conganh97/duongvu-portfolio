@@ -73,8 +73,9 @@
   }
 }
 
-/* Scroll-reveal primitive driven by IntersectionObserver in <Reveal />. */
-[data-reveal] {
+/* Scroll-reveal primitive driven by IntersectionObserver in <Reveal />.
+   Gated on .js so content stays visible if scripts fail or are disabled. */
+.js [data-reveal] {
   opacity: 0;
   transform: translateY(18px);
   transition:
@@ -83,7 +84,7 @@
   transition-delay: var(--reveal-delay, 0ms);
 }
 
-[data-reveal="shown"] {
+.js [data-reveal="shown"] {
   opacity: 1;
   transform: none;
 }
@@ -93,7 +94,7 @@
     scroll-behavior: auto;
   }
 
-  [data-reveal] {
+  .js [data-reveal] {
     opacity: 1;
     transform: none;
     transition: none;
